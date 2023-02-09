@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<project name="ChatOS" default="jar" basedir=".">
+	<description>
+		ChatOS build file
+	</description>
+
+	<property name="src" location="src" />
+	<property name="doc" location="doc/javadoc" />
+	<property name="lib" location="lib" />
+	<property name="bin" location="bin" />
+
+	<target name="init">
+		<mkdir dir="${bin}" />
+	</target>
+
+	<target name="compile" depends="init" description="compile sources">
+		<javac includeantruntime="false" srcdir="${src}" destdir="${bin}">
+		</javac>
+	</target>
+
+	<target name="jar" depends="doc,compile" description="generate jar">
+		<jar jarfile="ClientChatOs.jar" basedir="${bin}" />
+		<jar destfile="ClientChatOs.jar">
+			<fileset dir="${bin}" />
+			<manifest>
+				<attribute name="Main-Class" value="fr.umlv.chatos.client.ClientChatOS" />
+			</manifest>
+		</jar>
+		<jar jarfile="ServerChatOs.jar" basedir="${bin}" />
+		<jar destfile="ServerChatOs.jar">
+			<fileset dir="${bin}" />
+			<manifest>
+				<attribute name="Main-Class" value="fr.umlv.chatos.server.ServerChatOS" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="doc" description="generate documentation">
+		<javadoc sourcepath="${src}" destdir="${doc}" />
+	</target>
+
+
+	<target name="clean">
+		<delete dir="${bin}" />
+		<delete dir="${doc}" />
+		<delete file="ClientChatOs.jar" />
+		<delete file="ServerChatOs.jar" />
+	</target>
+
+</project>
